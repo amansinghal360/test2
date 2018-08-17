@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<test name="Execute test scripts for User section when Email activaiton is True"
+		preserve-order="true">
+		<parameter name="checkBoxValue" value="True" />
+		<classes>
+			<class name="com.dp.qa.common.TuringONorOffEmailActivation" />
+			<class name="com.dp.qa.users.UserRegisterationAndActivation" />
+			<class name="com.dp.qa.users.UserResendsActivationEmail" />
+			<class name="com.dp.qa.users.AdminResendsUserActivationEmail" />
+		</classes>
+	</test>
+
+	<test name="Execute test scripts for User section when Email activaiton is False"
+		preserve-order="true">
+		<parameter name="checkBoxValue" value="False" />
+		<classes>
+			<class name="com.dp.qa.common.TuringONorOffEmailActivation" />
+			<class name="com.dp.qa.users.UserLogsInviaAccessDenied" />
+			<class name="com.dp.qa.users.UserEditsTheirProfile" />
+			<class name="com.dp.qa.users.UserDisassociatesFromCompany" />
+			<class name="com.dp.qa.users.UserUpdatesPassword" />
+			<class name="com.dp.qa.users.UserForgetsPassword" />
+			<class name="com.dp.qa.users.UserAcceptsCompanyInvitation" />
+			<class name="com.dp.qa.users.CRUDAdminUserSearch" />
+			<class name="com.dp.qa.users.SiteAdminEditsUserProfile" />
+			<class name="com.dp.qa.users.AdminEditsAdminProfile" />
+			<class name="com.dp.qa.users.AdminViewsUserProfile" />
+			<class name="com.dp.qa.users.AdminCreatesOnBehalfOfUser" />
+			<class name="com.dp.qa.users.AdminDisassociatesUserFromCompany" />
+			<class name="com.dp.qa.users.AdminInactivatesReactivatesUser" />
+			<class name="com.dp.qa.users.AdminEditsAdminProfile" />
+			<class name="com.dp.qa.users.AdminSendsForgotPasswordForUser" />
+			<class name="com.dp.qa.users.AdminDeletesUserAndReinstatesDeletedUser" />
+			<class name="com.dp.qa.users.AdminReassignsUserAssociatedEntities" />
+			<class name="com.dp.qa.users.UserAcceptsUpdatedTermsAndConditions" />
+		</classes>
+	</test>
+
+</suite> <!-- Suite -->

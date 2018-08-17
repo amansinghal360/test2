@@ -1,0 +1,268 @@
+package com.dp.qa.users;
+
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import com.dp.qa.base.GlobalVars;
+import com.dp.qa.base.TestBase;
+import com.dp.qa.pages.HomePage;
+import com.dp.qa.pages.NavTabAndUserAssociationsOnMyAccountPage;
+import com.dp.qa.pages.RegisterationPage;
+import com.dp.qa.pages.SettingPage;
+import com.dp.qa.pages.MyAccount.DevicePage;
+import com.dp.qa.pages.MyAccount.InvoicesPage;
+import com.dp.qa.pages.MyAccount.MyAccountPage;
+import com.dp.qa.pages.ProgramTools.ProgramToolsPage;
+
+public class AdminCreatesOnBehalfOfUser extends TestBase {
+	protected HomePage homePage;
+	protected RegisterationPage registerationPage;
+	protected MyAccountPage myAccountPage;
+	protected SettingPage settingPage;
+	protected NavTabAndUserAssociationsOnMyAccountPage navTabOnMyAccountPage;
+	protected DevicePage devicePage;
+	protected ProgramToolsPage programToolsPage;
+	protected InvoicesPage invoicePage;
+
+	@BeforeMethod
+	public void setUp() {
+		homePage = new HomePage(driver);
+		myAccountPage = new MyAccountPage(driver);
+		settingPage = new SettingPage(driver);
+		registerationPage = new RegisterationPage(driver);
+		navTabOnMyAccountPage = new NavTabAndUserAssociationsOnMyAccountPage(driver);
+		devicePage = new DevicePage(driver);
+		programToolsPage = new ProgramToolsPage(driver);
+		invoicePage = new InvoicesPage(driver);
+	}
+
+	@Test(description = "How an admin would create a submission,ticket,test request on behalf of a user")
+	public void adminCreatesSubmissionTicketTestRequestOnBehalfOfUser() {
+		homePage.clickOnLoginFromHeader();
+		homePage.clickOnRegisterLink();
+		registerationPage.isUserNavigateTo("Create Account");
+		registerationPage.enterUserName();
+		registerationPage.enterPassword(props.getProperty("Admin_Password"));
+		registerationPage.enterConfirmPassword(props.getProperty("Admin_Password"));
+		registerationPage.enterFirstName();
+		registerationPage.enterLasttName();
+		registerationPage.enterEmailAddress(props.getProperty("User_EmailDomain"));
+		registerationPage.enterConfirmEmailAddress();
+		registerationPage.enterForumUserName();
+		registerationPage.enterAddress(props.getProperty("User_Address"));
+		registerationPage.enterCity(props.getProperty("User_City"));
+		registerationPage.selectStateName(props.getProperty("User_State"));
+		registerationPage.enterPostalCode(props.getProperty("User_PostalCode"));
+		registerationPage.selectCountryName(props.getProperty("User_Country"));
+		registerationPage.acceptTermsAndCondition();
+		registerationPage.clickOnSubmitButton();
+		settingPage.isUserNavigateTo("Company Registration (Matches Found)");
+		homePage.logOutFromApplication();
+
+		homePage.clickOnLoginFromHeader();
+		homePage.loginWithCredentails(props.getProperty("Admin_Username"), props.getProperty("Admin_Password"));
+		homePage.isUserLoggedIn(props.getProperty("Admin_Username"));
+		homePage.waitToLoaderRemove();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		myAccountPage.enterKeywords(props.getProperty("Site_Admin_Username"));
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		myAccountPage.removalAllAddedRole();
+		myAccountPage.assignRoleToUser("BDM");
+		myAccountPage.assignRoleToUser("SITE_ADMIN");
+		myAccountPage.assignRoleToUser("DEVELOPER_SUPPORT");
+		myAccountPage.assignRoleToUser("TESTING_MANAGER");
+		myAccountPage.assignRoleToUser("TECH_REVIEWER");
+		myAccountPage.assignRoleToUser("FINANCIAL_ADMIN");
+		myAccountPage.assignRoleToUser("FINANCIAL_USER");
+		myAccountPage.assignRoleToUser("TESTING_ENGINEER ");
+		myAccountPage.clickOnUpdateButton();
+		myAccountPage.alertSuccessMessage("Your changes have been saved successfully");
+		homePage.logOutFromApplication();
+
+		homePage.clickOnLoginFromHeader();
+		homePage.loginWithCredentails(props.getProperty("Site_Admin_Username"), props.getProperty("Admin_Password"));
+		homePage.isUserLoggedIn(props.getProperty("Site_Admin_Username"));
+		homePage.waitToLoaderRemove();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnSubmitMarketPlaceSolutionIndustriesLink();
+		settingPage.isUserNavigateTo("Submit Marketplace Solution Industries");
+		devicePage.enterAdditionalComments("Added comment for Testing only");
+		devicePage.clickOnSubmitLink();
+		myAccountPage.alertSuccessMessage("Your changes have been saved successfully");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnCreateTicket();
+		settingPage.isUserNavigateTo("Create Ticket");
+		programToolsPage.enterSummary("Ticekt created for automation");
+		programToolsPage.enterDescription("This ticket has been raised using automation");
+		programToolsPage.selectTicketPriority("Critical");
+		programToolsPage.clickOnCreateButton();
+		myAccountPage.alertSuccessMessage(
+				"Ticket has been successfully created on behalf of " + GlobalVars.registerUserName + ".");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		navTabOnMyAccountPage.isReassignLink("Zendesk Ticket Type");
+
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnCreateNonRestrictedRequest();
+		settingPage.isUserNavigateTo("Create Non-Restricted Request");
+		programToolsPage.selectResourceType("1029 Resource Test");
+		programToolsPage.selectLocation("1029 Resource Test Location");
+		programToolsPage.enterPhoneNumber("512-218-1001");
+		programToolsPage.selectTicketPriority("Critical");
+		programToolsPage.clickOnSubmitInputType();
+		myAccountPage.alertSuccessMessage("Test Request has been successfully created on behalf of the user.");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		navTabOnMyAccountPage.isReassignLink("Non-Restricted Request");
+		homePage.logOutFromApplication();
+	}
+
+	@Test(description = "How an admin would create Additional Support Hours Invoice, Additional Support Tickets Invoice, General Invoice on behalf of a user", dependsOnMethods = {
+			"adminCreatesSubmissionTicketTestRequestOnBehalfOfUser" })
+	public void adminCreatesInvoiceOnBehalfOfUser() {
+		homePage.clickOnLoginFromHeader();
+		homePage.loginWithCredentails(props.getProperty("Site_Admin_Username"), props.getProperty("Admin_Password"));
+		homePage.isUserLoggedIn(props.getProperty("Site_Admin_Username"));
+		homePage.waitToLoaderRemove();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnAdditionalSupportHoursInvoice();
+		settingPage.isUserNavigateTo("Create Additional Support Hours Invoice");
+		invoicePage.selectBDM(props.getProperty("BDM"));
+		invoicePage.enterGrantSupportHours(props.getProperty("SupportHours"));
+		invoicePage.enterInvoiceDescription(props.getProperty("InvoiceDescription"));
+		invoicePage.enterQuotedPrice(props.getProperty("QuotedPRice"));
+		invoicePage.enterAddress(props.getProperty("User_Address"));
+		invoicePage.enterCityName(props.getProperty("User_City"));
+		invoicePage.selectStateName(props.getProperty("StateName"));
+		invoicePage.enterPostalCode(props.getProperty("User_PostalCode"));
+		invoicePage.selectCountry(props.getProperty("User_Country"));
+		invoicePage.enterMainPhone(props.getProperty("MainPhone"));
+		invoicePage.enterBillingContactName(props.getProperty("BillingContactName"));
+		invoicePage.enterBillingContactPhone(props.getProperty("BillingContactPhone"));
+		invoicePage.enterbillingContactEmail(props.getProperty("BillingContactEmail"));
+		invoicePage.clickOnCreateInvoice();
+		settingPage.isUserNavigateTo("Verify Invoice");
+		invoicePage.clickOnApproveInvoice();
+		myAccountPage
+				.alertSuccessMessage("The invoice has been created and user has been sent notification of billing.");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		navTabOnMyAccountPage.isReassignLink("Additional Support Hours");
+
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnAdditionalSupportTicketsInvoice();
+		settingPage.isUserNavigateTo("Create Additional Support Tickets Invoice");
+		invoicePage.selectBDM(props.getProperty("BDM"));
+		invoicePage.enterGrantSupportTickets(props.getProperty("SupportHours"));
+		invoicePage.enterInvoiceDescription(props.getProperty("InvoiceDescription"));
+		invoicePage.enterQuotedPrice(props.getProperty("QuotedPRice"));
+		invoicePage.enterAddress(props.getProperty("User_Address"));
+		invoicePage.enterCityName(props.getProperty("User_City"));
+		invoicePage.selectStateName(props.getProperty("StateName"));
+		invoicePage.enterPostalCode(props.getProperty("User_PostalCode"));
+		invoicePage.selectCountry(props.getProperty("User_Country"));
+		invoicePage.enterMainPhone(props.getProperty("MainPhone"));
+		invoicePage.enterBillingContactName(props.getProperty("BillingContactName"));
+		invoicePage.enterBillingContactPhone(props.getProperty("BillingContactPhone"));
+		invoicePage.enterbillingContactEmail(props.getProperty("BillingContactEmail"));
+		invoicePage.clickOnCreateInvoice();
+		settingPage.isUserNavigateTo("Verify Invoice");
+		invoicePage.clickOnApproveInvoice();
+		myAccountPage
+				.alertSuccessMessage("The invoice has been created and user has been sent notification of billing.");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		navTabOnMyAccountPage.isReassignLink("Additional Support Tickets");
+
+		myAccountPage.clickOnCreateForUserLink();
+		navTabOnMyAccountPage.isUserNavigateToModal("Create for User");
+		navTabOnMyAccountPage.clickOnGeneralInvoiceLink();
+		settingPage.isUserNavigateTo("General Invoice");
+		invoicePage.enterStartEndDate("9", "25");
+		invoicePage.enterInvoiceDescriptionDetails(props.getProperty("InvoiceDescription"));
+		invoicePage.enterQuotedPrice(props.getProperty("QuotedPRice"));
+		invoicePage.enterAddress(props.getProperty("User_Address"));
+		invoicePage.enterCityName(props.getProperty("User_City"));
+		invoicePage.selectStateName(props.getProperty("StateName"));
+		invoicePage.enterPostalCode(props.getProperty("User_PostalCode"));
+		invoicePage.selectCountry(props.getProperty("User_Country"));
+		invoicePage.enterMainPhone(props.getProperty("MainPhone"));
+		invoicePage.enterBillingContactName(props.getProperty("BillingContactName"));
+		invoicePage.enterBillingContactPhone(props.getProperty("BillingContactPhone"));
+		invoicePage.enterbillingContactEmail(props.getProperty("BillingContactEmail"));
+		invoicePage.clickOnCreateInvoice();
+		myAccountPage.alertSuccessMessage("success!");
+		settingPage.isUserNavigateTo("Membership Invoice");
+		homePage.clickOnHomeLink();
+		myAccountPage.clickMyAccountAtHeader();
+		myAccountPage.clickSearchUserByHoverCompaniesAndUsers();
+		settingPage.isUserNavigateTo("Search Users");
+		myAccountPage.enterKeywords(GlobalVars.registerUserName);
+		myAccountPage.clickOnSearchButton();
+		myAccountPage.isUserNavigateTo("User Search Results");
+		myAccountPage.openSearchedResult();
+		settingPage.isUserNavigateTo("Edit My Profile");
+		navTabOnMyAccountPage.isReassignLink("General Invoice");
+		myAccountPage.clickOnDeleteBttnAtEditMyProfile();
+		myAccountPage.alertSuccessMessage("Your item has been deleted successfully");
+	}
+}

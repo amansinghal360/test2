@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dp.qa.common.MyLoginTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-08-16T15:23:32" hostname="DESKTOP-TS0LR6C" time="11.594">
+  <properties/>
+  <testcase name="myLoginTest" classname="com.dp.qa.common.MyLoginTest" time="11.594"/>
+  <system-out><![CDATA[ INFO [Test worker] (TestBase.java:220)- Environment set to: qa
+ INFO [Test worker] (TestBase.java:160)- Browser set to: chrome
+ INFO [Test worker] (TestBase.java:187)- Initializing Chrome Browser
+ INFO [Test worker] (TestBase.java:104)- Application is loading: https://dpqa-stage.developerprogram.org
+ INFO [Test worker] (TestBase.java:111)- Extent report logging started for MyLoginTest : myLoginTest
+>>>>> Execution started: MyLoginTest : myLoginTest
+ INFO [Test worker] (WaitUtil.java:318)- Waiting for an element to be invisible at locator:By.className: tp-loader spinner0
+ INFO [Test worker] (WaitUtil.java:67)- Waiting for an element to be visible using locator: [[RemoteWebDriver: chrome on LINUX (7412faf873c5defbbeb4b42818adc673)] -> xpath: //a[contains(text(),' Login')]]
+ INFO [Test worker] (UIUtil.java:125)- Step: 'Click on login link from header' successful
+ INFO [Test worker] (UIUtil.java:153)- Step: 'Enter username into email field' with input 'seleniumTestUser1' in locator '[[RemoteWebDriver: chrome on LINUX (7412faf873c5defbbeb4b42818adc673)] -> id: log]' successful
+ INFO [Test worker] (UIUtil.java:153)- Step: 'Enter password into password field' with input '123123' in locator '[[RemoteWebDriver: chrome on LINUX (7412faf873c5defbbeb4b42818adc673)] -> id: pwd]' successful
+ INFO [Test worker] (UIUtil.java:125)- Step: 'Click on Login button' successful
+ INFO [Test worker] (WaitUtil.java:67)- Waiting for an element to be visible using locator: [[RemoteWebDriver: chrome on LINUX (7412faf873c5defbbeb4b42818adc673)] -> xpath: //div[@class='top-bar-dark']/descendant::li[1]]
+ INFO [Test worker] (VerifyUtils.java:95)- User should logged into application: Assertion is successful
+ INFO [Test worker] (WaitUtil.java:120)- Waiting for an element to be enable using locator:[[RemoteWebDriver: chrome on LINUX (7412faf873c5defbbeb4b42818adc673)] -> xpath: //a[contains(text(),'Logout')]]
+ INFO [Test worker] (UIUtil.java:125)- Step: 'Logout from the application' successful
+]]></system-out>
+  <system-err><![CDATA[Aug 16, 2018 8:53:10 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+]]></system-err>
+</testsuite>
